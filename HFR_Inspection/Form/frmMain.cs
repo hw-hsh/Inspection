@@ -19,6 +19,7 @@ namespace HFR_Inspection
         frmSetting frmSubSetting;
         frmInitialize frmInit;
 
+        //static RegistryKey regKey = Registry.CurrentUser.CreateSubKey("Software").CreateSubKey("HFR_Inspection");
         static RegistryKey regKey = Registry.CurrentUser.CreateSubKey("Software").CreateSubKey("HFR_Inspection");
 
         //private Cognex.InSight.Net.CvsNetworkMonitor oNetworkMonitor1;
