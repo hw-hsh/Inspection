@@ -128,9 +128,9 @@ namespace HFR_Inspection
                 {
                     if (MessageBox.Show("핫키를 등록 하시겠습니까?", "물음", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                     {
-                        regKey.SetValue("HotKey_" + strSelect_HotKey, strFilePath + "\\" + strSelect_HotKey_Name + ".hwr");
-                        //regKey.SetValue("HotKey_" + strSelect_HotKey, strSelect_HotKey_Name);
-
+                        //regKey.SetValue("HotKey_" + strSelect_HotKey, strFilePath + "\\" + strSelect_HotKey_Name + ".hwr");
+                        regKey.SetValue("HotKey_" + strSelect_HotKey, strSelect_HotKey_Name);
+                        regKey.SetValue("Update_HotKey",1);
                     }
                 }
             }
@@ -139,22 +139,38 @@ namespace HFR_Inspection
 
         private void optHotKey_1_Click(object sender, EventArgs e)
         {
-            strSelect_HotKey = "A";
+            try
+            {
+                strSelect_HotKey = "A";
+            }
+            catch (Exception ex) { }
         }
 
         private void optHotKey_2_Click(object sender, EventArgs e)
         {
-            strSelect_HotKey = "B";
+            try
+            {
+                strSelect_HotKey = "B";
+            }
+            catch (Exception ex) { }
         }
 
         private void optHotKey_3_Click(object sender, EventArgs e)
         {
-            strSelect_HotKey = "C";
+            try
+            {
+                strSelect_HotKey = "C";
+            }
+            catch (Exception ex) { }
         }
 
         private void optHotKey_4_Click(object sender, EventArgs e)
         {
-            strSelect_HotKey = "D";
+            try
+            {
+                strSelect_HotKey = "D";
+            }
+            catch (Exception ex) { }
         }
 
         private void lstRecipe_SelectedValueChanged(object sender, EventArgs e)

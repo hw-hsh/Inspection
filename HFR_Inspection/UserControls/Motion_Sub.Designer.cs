@@ -491,7 +491,7 @@
         private System.Windows.Forms.RadioButton optHotKey_3;
         private System.Windows.Forms.RadioButton optHotKey_2;
         private System.Windows.Forms.RadioButton optHotKey_1;
-        private System.Windows.Forms.Button btnHotKey_Folder;
+        public System.Windows.Forms.Button btnHotKey_Folder;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnHotKey_Add;
     }

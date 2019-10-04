@@ -41,6 +41,10 @@
             this.cvsInSightDisplay2 = new Cognex.InSight.Controls.Display.CvsInSightDisplay();
             this.gbMain = new System.Windows.Forms.GroupBox();
             this.gbMainMotion = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btnLoad_Job = new System.Windows.Forms.Button();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtSelect_JobName = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnHotKey_3 = new System.Windows.Forms.Button();
             this.btnHotKey_2 = new System.Windows.Forms.Button();
@@ -140,10 +144,7 @@
             this.titleBar1 = new HFR_Inspection.UserControls.TitleBar();
             this.ucLog1 = new HFR_Inspection.UserControls.ucLog();
             this.test1 = new HFR_Inspection.UserControls.TitleBar();
-            this.txtSelect_JobName = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.btnLoad_Job = new System.Windows.Forms.Button();
+            this.tmSeq = new System.Windows.Forms.Timer(this.components);
             this.pnlTitle.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -291,6 +292,49 @@
             this.gbMainMotion.Size = new System.Drawing.Size(467, 867);
             this.gbMainMotion.TabIndex = 15;
             this.gbMainMotion.TabStop = false;
+            // 
+            // label22
+            // 
+            this.label22.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
+            this.label22.Location = new System.Drawing.Point(7, 188);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(128, 27);
+            this.label22.TabIndex = 33;
+            this.label22.Text = "작업 불러오기 :";
+            // 
+            // btnLoad_Job
+            // 
+            this.btnLoad_Job.BackgroundImage = global::HFR_Inspection.Properties.Resources.Foler;
+            this.btnLoad_Job.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnLoad_Job.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoad_Job.Location = new System.Drawing.Point(141, 182);
+            this.btnLoad_Job.Name = "btnLoad_Job";
+            this.btnLoad_Job.Size = new System.Drawing.Size(90, 38);
+            this.btnLoad_Job.TabIndex = 32;
+            this.btnLoad_Job.UseVisualStyleBackColor = true;
+            this.btnLoad_Job.Click += new System.EventHandler(this.btnLoad_Job_Click);
+            // 
+            // label20
+            // 
+            this.label20.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold);
+            this.label20.Location = new System.Drawing.Point(6, 215);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(122, 27);
+            this.label20.TabIndex = 31;
+            this.label20.Text = "현재 작업 : ";
+            // 
+            // txtSelect_JobName
+            // 
+            this.txtSelect_JobName.BackColor = System.Drawing.Color.White;
+            this.txtSelect_JobName.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold);
+            this.txtSelect_JobName.Location = new System.Drawing.Point(56, 246);
+            this.txtSelect_JobName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txtSelect_JobName.Name = "txtSelect_JobName";
+            this.txtSelect_JobName.ReadOnly = true;
+            this.txtSelect_JobName.Size = new System.Drawing.Size(354, 35);
+            this.txtSelect_JobName.TabIndex = 30;
+            this.txtSelect_JobName.Text = "-";
+            this.txtSelect_JobName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox1
             // 
@@ -1280,7 +1324,7 @@
             this.optRecipe.Text = "Recipe";
             this.optRecipe.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.optRecipe.UseVisualStyleBackColor = true;
-            this.optRecipe.CheckedChanged += new System.EventHandler(this.optRecipe_CheckedChanged);
+            this.optRecipe.Click += new System.EventHandler(this.optRecipe_Click);
             // 
             // optLog
             // 
@@ -1297,7 +1341,7 @@
             this.optLog.Text = "Log    ";
             this.optLog.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.optLog.UseVisualStyleBackColor = true;
-            this.optLog.CheckedChanged += new System.EventHandler(this.optLog_CheckedChanged);
+            this.optLog.Click += new System.EventHandler(this.optLog_Click);
             // 
             // btnMainSetting
             // 
@@ -1346,7 +1390,7 @@
             this.optIO.Text = "I/O     ";
             this.optIO.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.optIO.UseVisualStyleBackColor = true;
-            this.optIO.CheckedChanged += new System.EventHandler(this.optIO_CheckedChanged);
+            this.optIO.Click += new System.EventHandler(this.optIO_Click);
             // 
             // optMotion
             // 
@@ -1363,7 +1407,7 @@
             this.optMotion.Text = "Motion";
             this.optMotion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.optMotion.UseVisualStyleBackColor = true;
-            this.optMotion.CheckedChanged += new System.EventHandler(this.optMotion_CheckedChanged);
+            this.optMotion.Click += new System.EventHandler(this.optMotion_Click);
             // 
             // optVision
             // 
@@ -1380,7 +1424,7 @@
             this.optVision.Text = "Vision";
             this.optVision.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.optVision.UseVisualStyleBackColor = true;
-            this.optVision.CheckedChanged += new System.EventHandler(this.optVision_CheckedChanged);
+            this.optVision.Click += new System.EventHandler(this.optVision_Click);
             // 
             // optMain
             // 
@@ -1397,7 +1441,7 @@
             this.optMain.Text = "Process";
             this.optMain.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.optMain.UseVisualStyleBackColor = true;
-            this.optMain.CheckedChanged += new System.EventHandler(this.optMain_CheckedChanged);
+            this.optMain.Click += new System.EventHandler(this.optMain_Click);
             // 
             // btnLogout
             // 
@@ -1477,48 +1521,9 @@
             this.test1.Size = new System.Drawing.Size(1920, 84);
             this.test1.TabIndex = 7;
             // 
-            // txtSelect_JobName
+            // tmSeq
             // 
-            this.txtSelect_JobName.BackColor = System.Drawing.Color.White;
-            this.txtSelect_JobName.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold);
-            this.txtSelect_JobName.Location = new System.Drawing.Point(56, 246);
-            this.txtSelect_JobName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txtSelect_JobName.Name = "txtSelect_JobName";
-            this.txtSelect_JobName.ReadOnly = true;
-            this.txtSelect_JobName.Size = new System.Drawing.Size(354, 35);
-            this.txtSelect_JobName.TabIndex = 30;
-            this.txtSelect_JobName.Text = "-";
-            this.txtSelect_JobName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label20
-            // 
-            this.label20.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold);
-            this.label20.Location = new System.Drawing.Point(6, 215);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(122, 27);
-            this.label20.TabIndex = 31;
-            this.label20.Text = "현재 작업 : ";
-            // 
-            // label22
-            // 
-            this.label22.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
-            this.label22.Location = new System.Drawing.Point(7, 188);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(128, 27);
-            this.label22.TabIndex = 33;
-            this.label22.Text = "작업 불러오기 :";
-            // 
-            // btnLoad_Job
-            // 
-            this.btnLoad_Job.BackgroundImage = global::HFR_Inspection.Properties.Resources.Foler;
-            this.btnLoad_Job.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnLoad_Job.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoad_Job.Location = new System.Drawing.Point(141, 182);
-            this.btnLoad_Job.Name = "btnLoad_Job";
-            this.btnLoad_Job.Size = new System.Drawing.Size(90, 38);
-            this.btnLoad_Job.TabIndex = 32;
-            this.btnLoad_Job.UseVisualStyleBackColor = true;
-            this.btnLoad_Job.Click += new System.EventHandler(this.btnLoad_Job_Click);
+            this.tmSeq.Tick += new System.EventHandler(this.tmSeq_Tick);
             // 
             // frmMain
             // 
@@ -1676,14 +1681,15 @@
         public System.Windows.Forms.Button btnLogout;
         private ucRecipe2 ucRecipe2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnHotKey_3;
-        private System.Windows.Forms.Button btnHotKey_2;
-        private System.Windows.Forms.Button btnHotKey_1;
-        private System.Windows.Forms.Button btnHotKey_4;
         private System.Windows.Forms.TextBox txtSelect_JobName;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button btnLoad_Job;
+        public System.Windows.Forms.Button btnHotKey_3;
+        public System.Windows.Forms.Button btnHotKey_2;
+        public System.Windows.Forms.Button btnHotKey_1;
+        public System.Windows.Forms.Button btnHotKey_4;
+        private System.Windows.Forms.Timer tmSeq;
     }
 }
 

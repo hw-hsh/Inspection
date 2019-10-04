@@ -11,6 +11,7 @@ using Haewon.Module;
 using static Haewon.Module.Common;
 using Cognex.InSight.Controls.Filmstrip;
 using Cognex.InSight;
+using System.Collections.Generic;
 
 namespace HFR_Inspection
 {
@@ -48,6 +49,10 @@ namespace HFR_Inspection
 
         string strRecipe_Name;
         string strRecipe_Path;
+        string strLastRecipe;
+        string strLastRecipePath;
+
+        string strSeq_Action;
 
         DateTime dtStartTime;
 
@@ -69,6 +74,14 @@ namespace HFR_Inspection
 
         //string PlaybackFolder1;
         //string PlaybackFolder2;
+
+        public struct stRecipe
+        {
+            public string action;
+            public string item;
+            public int location;
+            public int velocity;
+        }
 
         public frmMain()
         {
@@ -103,7 +116,7 @@ namespace HFR_Inspection
             clsVision_Cam2.oNativeModeClient = new Cognex.InSight.NativeMode.CvsNativeModeClient();
             clsVision_Cam2.oNativeModeClient.ConnectCompleted += ONativeModeClient_ConnectCompleted1;
 
-            //tmStatus.Start();
+            tmStatus.Start();
 
             cvsFilmstrip1.ShowSummary = true;
             cvsFilmstrip2.ShowSummary = true;
@@ -159,6 +172,8 @@ namespace HFR_Inspection
             //clsVision_Cam2.oFilmstrip.Settings.QueueSize = 20;
             //clsVision_Cam2.oFilmstrip.Settings.ClearOnline = false;
             //clsVision_Cam2.oFilmstrip.Settings.Type = CvsFilmstripResultsQueueType.Last;
+
+            Update_LastRecipe();
 
             strPass = regKey.GetValue("Password", "0000").ToString();
 
@@ -225,6 +240,34 @@ namespace HFR_Inspection
         }
 
         #region Function
+
+        public void Update_LastRecipe(string Recipe)
+        {
+            try
+            {
+                strLastRecipe = Recipe;
+                txtSelect_JobName.Text = strLastRecipe;
+                strLastRecipePath = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + strLastRecipe + ".hwr";
+
+                regKey.SetValue("LastRecipe_Path", strLastRecipePath);
+                regKey.SetValue("LastRecipe_Name", strLastRecipe);
+            }
+            catch (Exception ex) { }
+        }
+
+        public void Update_LastRecipe()
+        {
+            try
+            {
+                //strLastRecipe = Recipe;
+                //txtSelect_JobName.Text = strLastRecipe;
+                //strLastRecipePath = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + strLastRecipe + ".hwr";
+
+                strRecipe_Path = regKey.GetValue("LastRecipe_Path", "-").ToString();
+                txtSelect_JobName.Text = regKey.GetValue("LastRecipe_Name", "-").ToString();
+            }
+            catch (Exception ex) { }
+        }
 
         public void Update_HotKey()
         {
@@ -704,6 +747,20 @@ namespace HFR_Inspection
 
         #region Timer
 
+        private void tmSeq_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                //switch (strSeq_Action)
+                //{
+                //    case :
+
+                //        break;
+                //}
+            }
+            catch (Exception ex) { }
+        }
+
         private void tmStatus_Tick(object sender, EventArgs e)
         {
             try
@@ -737,12 +794,12 @@ namespace HFR_Inspection
 
                     lblJobName1.Text = strJobname;
                 }
+                //else
+                //{
+                //    lblOnlineCam1.Text = "Offline";
+                //    lblOnlineCam1.BackColor = Color.Gray;
+                //}
 
-                else
-                {
-                    lblOnlineCam1.Text = "Offline";
-                    lblOnlineCam1.BackColor = Color.Gray;
-                }
                 if (cvsInSightDisplay2.Connected)
                 {
                     if (cvsInSightDisplay2.Edit.SoftOnline.Activated)
@@ -756,11 +813,11 @@ namespace HFR_Inspection
                         lblOnlineCam2.BackColor = Color.Gray;
                     }
                 }
-                else
-                {
-                    lblOnlineCam2.Text = "Offline";
-                    lblOnlineCam2.BackColor = Color.Gray;
-                }
+                //else
+                //{
+                //    lblOnlineCam2.Text = "Offline";
+                //    lblOnlineCam2.BackColor = Color.Gray;
+                //}
 
                 if (clsVision_Cam2.oNativeModeClient.Connected == true)
                 {
@@ -774,6 +831,12 @@ namespace HFR_Inspection
                     strJobname = strAs[1].ToString();
 
                     lblJobName2.Text = strJobname;
+                }
+
+                if (regKey.GetValue("Update_HotKey", "0").ToString() == "1")
+                {
+                    Update_HotKey();
+                    regKey.SetValue("Update_HotKey", 0);
                 }
             }
             catch (Exception ex) { }
@@ -1130,8 +1193,8 @@ namespace HFR_Inspection
         {
             try
             {
-                if (tmStatus.Enabled == false)
-                    tmStatus.Start();
+                //if (tmStatus.Enabled == false)
+                //    tmStatus.Start();
 
                 ConnectAsync(clsVision_Cam2.oNativeModeClient, regKey.GetValue("Cam2_IP", "0.0.0.0").ToString(), "admin", "");
 
@@ -1155,8 +1218,8 @@ namespace HFR_Inspection
         {
             try
             {
-                if (tmStatus.Enabled == false)
-                    tmStatus.Start();
+                //if (tmStatus.Enabled == false)
+                //    tmStatus.Start();
 
                 ConnectAsync(clsVision_Cam1.oNativeModeClient, regKey.GetValue("Cam1_IP", "0.0.0.0").ToString(), "admin", "");
 
@@ -1371,110 +1434,21 @@ namespace HFR_Inspection
             catch (Exception ex) { }
         }
 
-        private void optVision_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (optVision.Checked == true)
-                {
-                    if (Islogin == false)
-                        Login();
-
-                    if (Islogin == true)
-                        MenuVisible(Display_Menu.Vision);
-                }
-            }
-            catch (Exception ex) { }
-        }
-
-        private void optMotion_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (optMotion.Checked == true)
-                {
-                    if (Islogin == false)
-                        Login();
-
-                    if (Islogin == true)
-                        MenuVisible(Display_Menu.Motion);
-                }
-            }
-            catch (Exception ex) { }
-        }
-
-        private void optIO_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (optIO.Checked == true)
-                {
-                    if (Islogin == false)
-                        Login();
-
-                    if (Islogin == true)
-                        MenuVisible(Display_Menu.IO);
-                }
-            }
-            catch (Exception ex) { }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
                 UpdateLog_Ins("테스트테스트");
-                if (bInit_Cam1 == true && bInit_Cam2 == true)
+                if (bInit_Cam1 == true && bInit_Cam2 == true && bInit_Motion == true)
                 {
+                    regKey.SetValue("Inspection_Action", "none");
+                    strSeq_Action = "none";
 
+                    tmSeq.Start();
                 }
                 else
                 {
                     MessageBox.Show("초기화 되지 않았습니다.");
-                }
-            }
-            catch (Exception ex) { }
-        }
-
-        private void optRecipe_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (optRecipe.Checked == true)
-                {
-                    if (Islogin == false)
-                        Login();
-
-                    if (Islogin == true)
-                        MenuVisible(Display_Menu.Recipe);
-                }
-            }
-            catch (Exception ex) { }
-        }
-
-        private void optMain_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                MenuVisible(Display_Menu.Process);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void optLog_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (optLog.Checked == true)
-                {
-                    if (Islogin == false)
-                        Login();
-
-                    if (Islogin == true)
-                        MenuVisible(Display_Menu.Log);
                 }
             }
             catch (Exception ex) { }
@@ -1665,7 +1639,8 @@ namespace HFR_Inspection
                     btnChange_Pass.Visible = false;
                     btnLogout.Visible = false;
 
-                    optMain_CheckedChanged(sender, e);
+                    //optMain_CheckedChanged(sender, e);
+                    optMain_Click(sender, e);
                 }
             }
             catch (Exception ex) { }
@@ -1677,8 +1652,9 @@ namespace HFR_Inspection
             {
                 if (MessageBox.Show("작업을 변경 하시겠습니까?", "물음", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    txtSelect_JobName.Text = regKey.GetValue("HotKey_A", "-").ToString();
-                    strRecipe_Path = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + regKey.GetValue("HotKey_A", "-").ToString()+".hwr";
+                    Update_LastRecipe(regKey.GetValue("HotKey_A", "-").ToString());
+                    //txtSelect_JobName.Text = regKey.GetValue("HotKey_A", "-").ToString();
+                    //strRecipe_Path = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + regKey.GetValue("HotKey_A", "-").ToString() + ".hwr";
                 }
             }
             catch (Exception ex) { }
@@ -1690,8 +1666,9 @@ namespace HFR_Inspection
             {
                 if (MessageBox.Show("작업을 변경 하시겠습니까?", "물음", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    txtSelect_JobName.Text = regKey.GetValue("HotKey_B", "-").ToString();
-                    strRecipe_Path = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + regKey.GetValue("HotKey_B", "-").ToString() + ".hwr";
+                    Update_LastRecipe(regKey.GetValue("HotKey_B", "-").ToString());
+                    //txtSelect_JobName.Text = regKey.GetValue("HotKey_B", "-").ToString();
+                    //strRecipe_Path = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + regKey.GetValue("HotKey_B", "-").ToString() + ".hwr";
                 }
             }
             catch (Exception ex) { }
@@ -1703,8 +1680,9 @@ namespace HFR_Inspection
             {
                 if (MessageBox.Show("작업을 변경 하시겠습니까?", "물음", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    txtSelect_JobName.Text = regKey.GetValue("HotKey_C", "-").ToString();
-                    strRecipe_Path = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + regKey.GetValue("HotKey_C", "-").ToString() + ".hwr";
+                    Update_LastRecipe(regKey.GetValue("HotKey_C", "-").ToString());
+                    //txtSelect_JobName.Text = regKey.GetValue("HotKey_C", "-").ToString();
+                    //strRecipe_Path = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + regKey.GetValue("HotKey_C", "-").ToString() + ".hwr";
                 }
             }
             catch (Exception ex) { }
@@ -1716,8 +1694,9 @@ namespace HFR_Inspection
             {
                 if (MessageBox.Show("작업을 변경 하시겠습니까?", "물음", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    txtSelect_JobName.Text = regKey.GetValue("HotKey_D", "-").ToString();
-                    strRecipe_Path = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + regKey.GetValue("HotKey_D", "-").ToString() + ".hwr";
+                    Update_LastRecipe(regKey.GetValue("HotKey_D", "-").ToString());
+                    //txtSelect_JobName.Text = regKey.GetValue("HotKey_D", "-").ToString();
+                    //strRecipe_Path = regKey.GetValue("Recipe_Path", "-").ToString() + "\\" + regKey.GetValue("HotKey_D", "-").ToString() + ".hwr";
                 }
             }
             catch (Exception ex) { }
@@ -1747,6 +1726,98 @@ namespace HFR_Inspection
 
                         rd.Close();
                     }
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void optMain_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MenuVisible(Display_Menu.Process);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void optRecipe_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (optRecipe.Checked == true)
+                {
+                    if (Islogin == false)
+                        Login();
+
+                    if (Islogin == true)
+                        MenuVisible(Display_Menu.Recipe);
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void optVision_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (optVision.Checked == true)
+                {
+                    if (Islogin == false)
+                        Login();
+
+                    if (Islogin == true)
+                        MenuVisible(Display_Menu.Vision);
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void optMotion_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (optMotion.Checked == true)
+                {
+                    if (Islogin == false)
+                        Login();
+
+                    if (Islogin == true)
+                        MenuVisible(Display_Menu.Motion);
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void optIO_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (optIO.Checked == true)
+                {
+                    if (Islogin == false)
+                        Login();
+
+                    if (Islogin == true)
+                        MenuVisible(Display_Menu.IO);
+                }
+            }
+            catch (Exception ex) { }
+        }
+
+        private void optLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (optLog.Checked == true)
+                {
+                    if (Islogin == false)
+                        Login();
+
+                    if (Islogin == true)
+                        MenuVisible(Display_Menu.Log);
                 }
             }
             catch (Exception ex) { }
