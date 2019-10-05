@@ -138,7 +138,7 @@
             this.groupBox1.Size = new System.Drawing.Size(461, 69);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Action";
+            this.groupBox1.Text = "동작";
             // 
             // optInspection
             // 
@@ -321,7 +321,7 @@
             this.groupBox4.Size = new System.Drawing.Size(461, 248);
             this.groupBox4.TabIndex = 30;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "작업 핫 키";
+            this.groupBox4.Text = "작업 핫 키 등록";
             // 
             // btnHotKey_Add
             // 

@@ -130,7 +130,7 @@ namespace HFR_Inspection
                     {
                         //regKey.SetValue("HotKey_" + strSelect_HotKey, strFilePath + "\\" + strSelect_HotKey_Name + ".hwr");
                         regKey.SetValue("HotKey_" + strSelect_HotKey, strSelect_HotKey_Name);
-                        regKey.SetValue("Update_HotKey",1);
+                        regKey.SetValue("Update_HotKey", 1);
                     }
                 }
             }
@@ -175,7 +175,11 @@ namespace HFR_Inspection
 
         private void lstRecipe_SelectedValueChanged(object sender, EventArgs e)
         {
-            strSelect_HotKey_Name = lstRecipe.SelectedItem.ToString();
+            try
+            {
+                strSelect_HotKey_Name = lstRecipe.SelectedItem.ToString();
+            }
+            catch (Exception ex) { }
         }
 
         private void dgvRecipe_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
@@ -228,6 +232,7 @@ namespace HFR_Inspection
                     }
                     sw.Close();
                 }
+                Listbox_Init();
             }
             catch (Exception ex) { }
         }
@@ -295,12 +300,12 @@ namespace HFR_Inspection
             {
                 if (Recipe.chkRecipe_Cam1.Checked == true)
                 {
-                    dgvRecipe.Rows.Add(nCnt, "Cam1", "Inpection", "-", "-");
+                    dgvRecipe.Rows.Add(nCnt, "Cam1", "Inspection", "-", "-");
                     nCnt++;
                 }
                 if (Recipe.chkRecipe_Cam2.Checked == true)
                 {
-                    dgvRecipe.Rows.Add(nCnt, "Cam2", "Inpection", "-", "-");
+                    dgvRecipe.Rows.Add(nCnt, "Cam2", "Inspection", "-", "-");
                 }
             }
         }
@@ -368,12 +373,12 @@ namespace HFR_Inspection
                 {
                     if (Recipe.chkRecipe_Cam1.Checked == true)
                     {
-                        dgvRecipe.Rows.Insert(nIndex, nIndex, "Cam1", "Inpection", "-", "-");
+                        dgvRecipe.Rows.Insert(nIndex, nIndex, "Cam1", "Inspection", "-", "-");
                         nIndex++;
                     }
                     if (Recipe.chkRecipe_Cam2.Checked == true)
                     {
-                        dgvRecipe.Rows.Insert(nIndex, nIndex, "Cam2", "Inpection", "-", "-");
+                        dgvRecipe.Rows.Insert(nIndex, nIndex, "Cam2", "Inspection", "-", "-");
                     }
                 }
             }

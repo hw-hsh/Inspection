@@ -127,7 +127,7 @@ namespace HFR_Inspection
         {
             try
             {
-
+                Motion.Move_Stop(Motion.Selected_Axis);
             }
             catch (Exception ex) { }
 
@@ -202,7 +202,7 @@ namespace HFR_Inspection
                 if (optJogSpeed_10.Checked == true)
                 {
                     nJog_SPD = 10;
-                    Motion.SpeedSet(Motion.Selected_Axis, 0, 200, nJog_SPD * 5000, nJog_SPD * 2000, nJog_SPD * 5000);
+                    Motion.SpeedSet(Motion.Selected_Axis, 0, nJog_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -216,7 +216,7 @@ namespace HFR_Inspection
                 if (optJogSpeed_5.Checked == true)
                 {
                     nJog_SPD = 5;
-                    Motion.SpeedSet(Motion.Selected_Axis, 0, 200, nJog_SPD * 5000, nJog_SPD * 2000, nJog_SPD * 5000);
+                    Motion.SpeedSet(Motion.Selected_Axis, 0, nJog_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -230,7 +230,7 @@ namespace HFR_Inspection
                 if (optJogSpeed_Manual.Checked == true)
                 {
                     nJog_SPD = Convert.ToInt16(optJogSpeed_Manual.Text);
-                    Motion.SpeedSet(Motion.Selected_Axis, 0, 200, nJog_SPD * 5000, nJog_SPD * 2000, nJog_SPD * 5000);
+                    Motion.SpeedSet(Motion.Selected_Axis, 0, nJog_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -239,12 +239,28 @@ namespace HFR_Inspection
 
         private void optRelSpeed_10_CheckedChanged(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (optRelSpeed_10.Checked == true)
+                {
+                    nRel_SPD = 10;
+                    Motion.SpeedSet(Motion.Selected_Axis, 0, nRel_SPD);
+                }
+            }
+            catch (Exception ex) { }
         }
 
         private void optRelSpeed_5_CheckedChanged(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (optRelSpeed_5.Checked == true)
+                {
+                    nRel_SPD = 5;
+                    Motion.SpeedSet(Motion.Selected_Axis, 0, nRel_SPD);
+                }
+            }
+            catch (Exception ex) { }
         }
 
         private void optRelSpeed_Manual_CheckedChanged(object sender, EventArgs e)
@@ -254,7 +270,7 @@ namespace HFR_Inspection
                 if (optRelSpeed_Manual.Checked == true)
                 {
                     nRel_SPD = Convert.ToInt16(txtRelSpeed_Manual.Text);
-                    Motion.SpeedSet(Motion.Selected_Axis, 0, 200, nRel_SPD * 5000, nRel_SPD * 2000, nRel_SPD * 5000);
+                    Motion.SpeedSet(Motion.Selected_Axis, 0, nRel_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -302,11 +318,11 @@ namespace HFR_Inspection
             {
                 if (frmMain.bInit_Motion == true)
                 {
-                    txtPos_X.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.X].dENCPos.ToString();
-                    txtPos_Y.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.Y].dENCPos.ToString();
-                    txtPos_T.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.T].dENCPos.ToString();
-                    txtPos_Z1.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.Z1].dENCPos.ToString();
-                    txtPos_Z2.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.Z2].dENCPos.ToString();
+                    txtPos_X.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.X].dENCPos.ToString();
+                    txtPos_Y.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.Y].dENCPos.ToString();
+                    txtPos_T.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.T].dENCPos.ToString();
+                    txtPos_Z1.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.Z1].dENCPos.ToString();
+                    txtPos_Z2.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.Z2].dENCPos.ToString();
                 }
             }
             catch (Exception ex) { }
@@ -316,11 +332,11 @@ namespace HFR_Inspection
         {
             try
             {
-                txtRecipe_X.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.X].dENCPos.ToString();
-                txtRecipe_Y.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.Y].dENCPos.ToString();
-                txtRecipe_T.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.T].dENCPos.ToString();
-                txtRecipe_Z1.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.Z1].dENCPos.ToString();
-                txtRecipe_Z2.Text = Motion2.tAllStatus.tServo[(short)ucMotion.axis.Z2].dENCPos.ToString();
+                txtRecipe_X.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.X].dENCPos.ToString();
+                txtRecipe_Y.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.Y].dENCPos.ToString();
+                txtRecipe_T.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.T].dENCPos.ToString();
+                txtRecipe_Z1.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.Z1].dENCPos.ToString();
+                txtRecipe_Z2.Text = Motion.tAllStatus.tServo[(short)ucMotion.axis.Z2].dENCPos.ToString();
             }
             catch (Exception ex) { }
         }

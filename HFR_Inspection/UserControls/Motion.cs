@@ -118,11 +118,11 @@ namespace HFR_Inspection
             catch (Exception ex) { return gRet; }
         }
 
-        public short SpeedSet(axis Axis, short Profile, double Start, double Acc, double Drive, double Dec)
+        public short SpeedSet(axis Axis, short Profile, double Velocity)
         {
             try
             {
-                gRet = gMotion.SpeedSet((short)Axis, 0, Start, Acc, Drive, Dec);
+                gRet = gMotion.SpeedSet((short)Axis, 0, Velocity / 2, Velocity * 1.5, Velocity, Velocity * 1.5);
                 return gRet;
             }
             catch (Exception ex) { return gRet; }
@@ -341,7 +341,7 @@ namespace HFR_Inspection
                     nABS_SPD = 10;
 
                     //gRet = gMotion.SpeedSet(nSelected_Axis, 0, 200, 50000, 20000, 50000);
-                    gRet = SpeedSet(Selected_Axis, 0, 200, nABS_SPD * 5000, nABS_SPD * 2000, nABS_SPD * 5000);
+                    gRet = SpeedSet(Selected_Axis, 0, nABS_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -355,7 +355,7 @@ namespace HFR_Inspection
                 {
                     nABS_SPD = 5;
 
-                    gRet = SpeedSet(Selected_Axis, 0, 200, nABS_SPD * 5000, nABS_SPD * 2000, nABS_SPD * 5000);
+                    gRet = SpeedSet(Selected_Axis, 0, nABS_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -369,7 +369,7 @@ namespace HFR_Inspection
                 {
                     nABS_SPD = 1;
 
-                    gRet = SpeedSet(Selected_Axis, 0, 200, nABS_SPD * 5000, nABS_SPD * 2000, nABS_SPD * 5000);
+                    gRet = SpeedSet(Selected_Axis, 0, nABS_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -383,7 +383,7 @@ namespace HFR_Inspection
                 {
                     nABS_SPD = Convert.ToInt16(txtABSSpeed_Manual.Text);
 
-                    gRet = SpeedSet(Selected_Axis, 0, nABS_SPD / 2, nABS_SPD * 1.5, nABS_SPD, nABS_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nABS_SPD);
                 }
             }
             catch (Exception ex) { MessageBox.Show("숫자만 입력 해주세요.", "안내", MessageBoxButtons.OK); }
@@ -397,7 +397,7 @@ namespace HFR_Inspection
                 {
                     nABS_SPD = Convert.ToInt16(txtABSSpeed_Manual.Text);
 
-                    gRet = SpeedSet(Selected_Axis, 0, nABS_SPD / 2, nABS_SPD * 1.5, nABS_SPD, nABS_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nABS_SPD);
                 }
             }
             catch (Exception ex) { MessageBox.Show("숫자만 입력 해주세요.", "안내", MessageBoxButtons.OK); }
@@ -410,7 +410,7 @@ namespace HFR_Inspection
                 if (optRelSpeed_10.Checked == true)
                 {
                     nRel_SPD = 10;
-                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD / 2, nRel_SPD * 1.5, nRel_SPD, nRel_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -423,7 +423,7 @@ namespace HFR_Inspection
                 if (optRelSpeed_5.Checked == true)
                 {
                     nRel_SPD = 5;
-                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD / 2, nRel_SPD * 1.5, nRel_SPD, nRel_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -436,7 +436,7 @@ namespace HFR_Inspection
                 if (optRelSpeed_1.Checked == true)
                 {
                     nRel_SPD = 1;
-                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD / 2, nRel_SPD * 1.5, nRel_SPD, nRel_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -449,7 +449,7 @@ namespace HFR_Inspection
                 if (optRelSpeed_Manual.Checked == true)
                 {
                     nRel_SPD = Convert.ToInt16(txtRelSpeed_Manual.Text);
-                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD / 2, nRel_SPD * 1.5, nRel_SPD, nRel_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD);
                 }
             }
             catch (Exception ex) { MessageBox.Show("숫자만 입력 해주세요.", "안내", MessageBoxButtons.OK); }
@@ -462,7 +462,7 @@ namespace HFR_Inspection
                 if (optRelSpeed_Manual.Checked == true)
                 {
                     nRel_SPD = Convert.ToInt16(txtRelSpeed_Manual.Text);
-                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD / 2, nRel_SPD * 1.5, nRel_SPD, nRel_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nRel_SPD);
                 }
             }
             catch (Exception ex) { MessageBox.Show("숫자만 입력 해주세요.", "안내", MessageBoxButtons.OK); }
@@ -535,7 +535,7 @@ namespace HFR_Inspection
                 if (optJogSpeed_10.Checked == true)
                 {
                     nJog_SPD = 10;
-                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD / 2, nJog_SPD * 1.5, nJog_SPD, nJog_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -548,7 +548,7 @@ namespace HFR_Inspection
                 if (optJogSpeed_5.Checked == true)
                 {
                     nJog_SPD = 5;
-                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD / 2, nJog_SPD * 1.5, nJog_SPD, nJog_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -561,7 +561,7 @@ namespace HFR_Inspection
                 if (optJogSpeed_1.Checked == true)
                 {
                     nJog_SPD = 1;
-                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD, nJog_SPD * 1.5, nJog_SPD, nJog_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD);
                 }
             }
             catch (Exception ex) { }
@@ -574,7 +574,7 @@ namespace HFR_Inspection
                 if (optJogSpeed_Manual.Checked == true)
                 {
                     nJog_SPD = Convert.ToInt16(txtJogSpeed_Manual.Text);
-                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD / 2, nJog_SPD * 1.5, nJog_SPD, nJog_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD);
                 }
             }
             catch (Exception ex) { MessageBox.Show("숫자만 입력 해주세요.", "안내", MessageBoxButtons.OK); }
@@ -587,7 +587,7 @@ namespace HFR_Inspection
                 if (optJogSpeed_Manual.Checked == true)
                 {
                     nJog_SPD = Convert.ToInt16(txtJogSpeed_Manual.Text);
-                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD / 2, nJog_SPD * 1.5, nJog_SPD, nJog_SPD * 1.5);
+                    gRet = SpeedSet(Selected_Axis, 0, nJog_SPD);
                 }
             }
             catch (Exception ex) { MessageBox.Show("숫자만 입력 해주세요.", "안내", MessageBoxButtons.OK); }

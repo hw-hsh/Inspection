@@ -1,4 +1,8 @@
-﻿namespace Haewon.Module
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace Haewon.Module
 {
     public class Common
     {
@@ -27,6 +31,29 @@
         #endregion
 
         #region Function
+        
+        public static Font AutoFontSize(Button button, String text)
+        {
+            Font ft;
+            Graphics gp;
+            SizeF sz;
+            Single Faktor, FaktorX, FaktorY;
+
+            gp = button.CreateGraphics();
+            sz = gp.MeasureString(text, button.Font);
+            gp.Dispose();
+
+            FaktorX = (button.Width) / sz.Width;
+            FaktorY = (button.Height) / sz.Height;
+
+            if (FaktorX > FaktorY)
+                Faktor = FaktorY;
+            else
+                Faktor = FaktorX;
+            ft = button.Font;
+
+            return new Font(ft.Name, ft.SizeInPoints * (Faktor) - 1);
+        }
 
         public static string Left(string Text, int TextLenth)
         {

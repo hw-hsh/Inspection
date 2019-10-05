@@ -138,13 +138,20 @@
             this.optVision = new System.Windows.Forms.RadioButton();
             this.optMain = new System.Windows.Forms.RadioButton();
             this.btnLogout = new System.Windows.Forms.Button();
+            this.tmSeq = new System.Windows.Forms.Timer(this.components);
             this.ucRecipe1 = new HFR_Inspection.ucRecipe1();
             this.motion1 = new HFR_Inspection.ucMotion();
             this.ucRecipe2 = new HFR_Inspection.ucRecipe2();
             this.titleBar1 = new HFR_Inspection.UserControls.TitleBar();
             this.ucLog1 = new HFR_Inspection.UserControls.ucLog();
             this.test1 = new HFR_Inspection.UserControls.TitleBar();
-            this.tmSeq = new System.Windows.Forms.Timer(this.components);
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.pnlTitle.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -169,7 +176,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1035);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1058);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1920, 22);
             this.statusStrip1.TabIndex = 2;
@@ -352,7 +359,7 @@
             // btnHotKey_3
             // 
             this.btnHotKey_3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHotKey_3.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnHotKey_3.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHotKey_3.Location = new System.Drawing.Point(232, 29);
             this.btnHotKey_3.Name = "btnHotKey_3";
             this.btnHotKey_3.Size = new System.Drawing.Size(90, 38);
@@ -364,7 +371,7 @@
             // btnHotKey_2
             // 
             this.btnHotKey_2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHotKey_2.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnHotKey_2.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHotKey_2.Location = new System.Drawing.Point(128, 29);
             this.btnHotKey_2.Name = "btnHotKey_2";
             this.btnHotKey_2.Size = new System.Drawing.Size(90, 38);
@@ -376,7 +383,7 @@
             // btnHotKey_1
             // 
             this.btnHotKey_1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHotKey_1.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnHotKey_1.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHotKey_1.Location = new System.Drawing.Point(24, 29);
             this.btnHotKey_1.Name = "btnHotKey_1";
             this.btnHotKey_1.Size = new System.Drawing.Size(90, 38);
@@ -388,7 +395,7 @@
             // btnHotKey_4
             // 
             this.btnHotKey_4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHotKey_4.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnHotKey_4.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnHotKey_4.Location = new System.Drawing.Point(336, 29);
             this.btnHotKey_4.Name = "btnHotKey_4";
             this.btnHotKey_4.Size = new System.Drawing.Size(90, 38);
@@ -886,6 +893,13 @@
             // 
             // gbCam1
             // 
+            this.gbCam1.Controls.Add(this.checkBox6);
+            this.gbCam1.Controls.Add(this.checkBox5);
+            this.gbCam1.Controls.Add(this.button1);
+            this.gbCam1.Controls.Add(this.button2);
+            this.gbCam1.Controls.Add(this.checkBox4);
+            this.gbCam1.Controls.Add(this.radioButton2);
+            this.gbCam1.Controls.Add(this.radioButton1);
             this.gbCam1.Controls.Add(this.checkBox2);
             this.gbCam1.Controls.Add(this.checkBox1);
             this.gbCam1.Controls.Add(this.btnFlimLast1);
@@ -926,7 +940,7 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(280, 168);
+            this.checkBox2.Location = new System.Drawing.Point(377, 122);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(90, 19);
             this.checkBox2.TabIndex = 26;
@@ -938,13 +952,12 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(281, 137);
+            this.checkBox1.Location = new System.Drawing.Point(281, 122);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(90, 19);
             this.checkBox1.TabIndex = 25;
             this.checkBox1.Text = "checkBox1";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Visible = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // btnFlimLast1
@@ -1457,6 +1470,10 @@
             this.btnLogout.Visible = false;
             this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
+            // tmSeq
+            // 
+            this.tmSeq.Tick += new System.EventHandler(this.tmSeq_Tick);
+            // 
             // ucRecipe1
             // 
             this.ucRecipe1.AutoSize = true;
@@ -1521,16 +1538,86 @@
             this.test1.Size = new System.Drawing.Size(1920, 84);
             this.test1.TabIndex = 7;
             // 
-            // tmSeq
+            // radioButton1
             // 
-            this.tmSeq.Tick += new System.EventHandler(this.tmSeq_Tick);
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(240, 165);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(98, 19);
+            this.radioButton1.TabIndex = 27;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "radioButton1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(356, 165);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(98, 19);
+            this.radioButton2.TabIndex = 28;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "radioButton2";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(527, 142);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(90, 19);
+            this.checkBox4.TabIndex = 29;
+            this.checkBox4.Text = "checkBox4";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(663, 123);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(40, 40);
+            this.button1.TabIndex = 31;
+            this.button1.Text = "<<";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Location = new System.Drawing.Point(617, 123);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(40, 40);
+            this.button2.TabIndex = 30;
+            this.button2.Text = "|<";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(304, 189);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(90, 19);
+            this.checkBox5.TabIndex = 32;
+            this.checkBox5.Text = "checkBox5";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(400, 189);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(90, 19);
+            this.checkBox6.TabIndex = 33;
+            this.checkBox6.Text = "checkBox6";
+            this.checkBox6.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1920, 1057);
+            this.ClientSize = new System.Drawing.Size(1920, 1080);
             this.Controls.Add(this.btnLogout);
             this.Controls.Add(this.btnChange_Pass);
             this.Controls.Add(this.checkBox3);
@@ -1690,6 +1777,13 @@
         public System.Windows.Forms.Button btnHotKey_1;
         public System.Windows.Forms.Button btnHotKey_4;
         private System.Windows.Forms.Timer tmSeq;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox5;
     }
 }
 

@@ -12,6 +12,7 @@ using static Haewon.Module.Common;
 using Cognex.InSight.Controls.Filmstrip;
 using Cognex.InSight;
 using System.Collections.Generic;
+using System.Text;
 
 namespace HFR_Inspection
 {
@@ -39,6 +40,8 @@ namespace HFR_Inspection
         public static bool bInit_Motion = false;
         public bool bInit_IO = false;
 
+        bool bSequence = false;
+
         public bool Islogin = false;
 
         //bool bOnline_Cam1 = false;
@@ -48,11 +51,11 @@ namespace HFR_Inspection
         public string strPass;
 
         string strRecipe_Name;
-        string strRecipe_Path;
+        string strRecipe_Path = "-";
         string strLastRecipe;
         string strLastRecipePath;
 
-        string strSeq_Action;
+        int nSeq_Step = 0;
 
         DateTime dtStartTime;
 
@@ -75,13 +78,15 @@ namespace HFR_Inspection
         //string PlaybackFolder1;
         //string PlaybackFolder2;
 
-        public struct stRecipe
+        struct Recipe
         {
             public string action;
             public string item;
             public int location;
             public int velocity;
         }
+
+        Recipe[] stRecipe;
 
         public frmMain()
         {
@@ -241,6 +246,99 @@ namespace HFR_Inspection
 
         #region Function
 
+        private void UpdateFilmstripActions(bool resultsQueueMode)
+        {
+            // This method gets called whenever we change the checked state of either
+            // the RecordPlayback or ResultsQueue radio button, so unbind all actions
+            // just to be sure. If a control is bound more than once to an action,
+            // then the action will execute more than once when that control is
+            // activated.
+            UnbindActions();
+
+            if (resultsQueueMode)
+            {
+                checkBox4.Visible = true;
+                button2.Visible = true;
+                button1.Visible = true;
+
+                btnFlimFrist1.Enabled = true;
+                btnFlimLast1.Enabled = true;
+                btnNext1.Enabled = true;
+                btnPre1.Enabled = true;
+                button2.Enabled = true;
+                button1.Enabled = true;
+                checkBox4.Enabled = true;
+
+                checkBox5.Visible = false;
+                checkBox6.Visible = false;
+
+                // Bind ResultsQueue Actions
+                clsVision_Cam1.oFilmstrip.SelectFirst.Bind(btnFlimFrist1);
+                clsVision_Cam1.oFilmstrip.SelectLast.Bind(btnFlimLast1);
+                clsVision_Cam1.oFilmstrip.SelectNext.Bind(btnNext1);
+                clsVision_Cam1.oFilmstrip.SelectPrevious.Bind(btnPre1);
+                clsVision_Cam1.oFilmstrip.SaveQueue.Bind(button2);
+                clsVision_Cam1.oFilmstrip.ClearQueue.Bind(button1);
+                clsVision_Cam1.oFilmstrip.FreezeQueue.Bind(checkBox4);
+            }
+            else
+            {
+                checkBox4.Visible = false;
+                button2.Visible = false;
+                button1.Visible = false;
+                checkBox5.Visible = true;
+                checkBox6.Visible = true;
+
+                btnFlimFrist1.Enabled = true;
+                btnFlimLast1.Enabled = true;
+                btnNext1.Enabled = true;
+                btnPre1.Enabled = true;
+                button2.Enabled = false;
+                button1.Enabled = false;
+                checkBox4.Enabled = false;
+
+                // Bind Playback Actions
+                clsVision_Cam1.oFilmstripPlayback.SelectFirst.Bind(btnFlimFrist1);
+                clsVision_Cam1.oFilmstripPlayback.SelectLast.Bind(btnFlimLast1);
+                clsVision_Cam1.oFilmstripPlayback.SelectNext.Bind(btnNext1);
+                clsVision_Cam1.oFilmstripPlayback.SelectPrevious.Bind(btnPre1);
+            }
+        }
+
+        private void UnbindActions()
+        {
+            // Unind ResultsQueue Actions
+            clsVision_Cam1.oFilmstrip.SelectFirst.Unbind(btnFlimFrist1);
+            clsVision_Cam1.oFilmstrip.SelectLast.Unbind(btnFlimLast1);
+            clsVision_Cam1.oFilmstrip.SelectNext.Unbind(btnNext1);
+            clsVision_Cam1.oFilmstrip.SelectPrevious.Unbind(btnPre1);
+            clsVision_Cam1.oFilmstrip.SaveQueue.Unbind(button2);
+            clsVision_Cam1.oFilmstrip.ClearQueue.Unbind(button1);
+            clsVision_Cam1.oFilmstrip.FreezeQueue.Unbind(checkBox4);
+
+            // Unbind Playback Actions
+            clsVision_Cam1.oFilmstripPlayback.SelectFirst.Unbind(btnFlimFrist1);
+            clsVision_Cam1.oFilmstripPlayback.SelectLast.Unbind(btnFlimLast1);
+            clsVision_Cam1.oFilmstripPlayback.SelectNext.Unbind(btnNext1);
+            clsVision_Cam1.oFilmstripPlayback.SelectPrevious.Unbind(btnPre1);
+        }
+
+        private bool Motion_Busy()
+        {
+            try
+            {
+                if (motion1.tAllStatus.tServo[(short)ucMotion.axis.X].nBusy == 0 &&
+                    motion1.tAllStatus.tServo[(short)ucMotion.axis.Y].nBusy == 0 &&
+                    motion1.tAllStatus.tServo[(short)ucMotion.axis.T].nBusy == 0 &&
+                    motion1.tAllStatus.tServo[(short)ucMotion.axis.Z1].nBusy == 0 &&
+                    motion1.tAllStatus.tServo[(short)ucMotion.axis.Z2].nBusy == 0)
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception ex) { return false; }
+        }
+
         public void Update_LastRecipe(string Recipe)
         {
             try
@@ -251,6 +349,8 @@ namespace HFR_Inspection
 
                 regKey.SetValue("LastRecipe_Path", strLastRecipePath);
                 regKey.SetValue("LastRecipe_Name", strLastRecipe);
+
+                Upload_Recipe();
             }
             catch (Exception ex) { }
         }
@@ -265,8 +365,43 @@ namespace HFR_Inspection
 
                 strRecipe_Path = regKey.GetValue("LastRecipe_Path", "-").ToString();
                 txtSelect_JobName.Text = regKey.GetValue("LastRecipe_Name", "-").ToString();
+
+                Upload_Recipe();
             }
             catch (Exception ex) { }
+        }
+
+        private void Upload_Recipe()
+        {
+            int nCnt = 0;
+            int lineCount = File.ReadAllLines(strRecipe_Path).Length + 1;
+
+            stRecipe = new Recipe[lineCount];
+
+            StreamReader rd = new StreamReader(strRecipe_Path, Encoding.GetEncoding("euc-kr"));
+
+            while (!rd.EndOfStream)
+            {
+                string line = rd.ReadLine();
+                string[] cols = line.Split(',');
+
+                stRecipe[nCnt].item = cols[1];
+                stRecipe[nCnt].action = cols[2];
+
+                if (stRecipe[nCnt].action != "Inspection")
+                {
+                    stRecipe[nCnt].location = Convert.ToInt32(cols[3]);
+                    stRecipe[nCnt].velocity = Convert.ToInt32(cols[4]);
+                }
+                else
+                {
+                    stRecipe[nCnt].velocity = 0;
+                    stRecipe[nCnt].location = 0;
+                }
+                nCnt++;
+            }
+            stRecipe[nCnt].action = "Done";
+            rd.Close();
         }
 
         public void Update_HotKey()
@@ -274,9 +409,13 @@ namespace HFR_Inspection
             try
             {
                 btnHotKey_1.Text = regKey.GetValue("HotKey_A", "-").ToString();
+                btnHotKey_1.Font = Haewon.Module.Common.AutoFontSize(btnHotKey_1, regKey.GetValue("HotKey_A", "-").ToString());
                 btnHotKey_2.Text = regKey.GetValue("HotKey_B", "-").ToString();
+                btnHotKey_2.Font = Haewon.Module.Common.AutoFontSize(btnHotKey_2, regKey.GetValue("HotKey_B", "-").ToString());
                 btnHotKey_3.Text = regKey.GetValue("HotKey_C", "-").ToString();
+                btnHotKey_3.Font = Haewon.Module.Common.AutoFontSize(btnHotKey_3, regKey.GetValue("HotKey_C", "-").ToString());
                 btnHotKey_4.Text = regKey.GetValue("HotKey_D", "-").ToString();
+                btnHotKey_4.Font = Haewon.Module.Common.AutoFontSize(btnHotKey_4, regKey.GetValue("HotKey_D", "-").ToString());
             }
             catch (Exception ex) { }
         }
@@ -751,12 +890,68 @@ namespace HFR_Inspection
         {
             try
             {
-                //switch (strSeq_Action)
-                //{
-                //    case :
+                switch (stRecipe[nSeq_Step].action)
+                {
+                    case "Move":
+                        switch (stRecipe[nSeq_Step].item)
+                        {
+                            case "X":
+                                motion1.SpeedSet(ucMotion.axis.X, 0, stRecipe[nSeq_Step].velocity);
+                                motion1.Move_ABS(ucMotion.axis.X, stRecipe[nSeq_Step].location);
+                                nSeq_Step++;
+                                break;
 
-                //        break;
-                //}
+                            case "Y":
+                                motion1.SpeedSet(ucMotion.axis.Y, 0, stRecipe[nSeq_Step].velocity);
+                                motion1.Move_ABS(ucMotion.axis.Y, stRecipe[nSeq_Step].location);
+                                nSeq_Step++;
+                                break;
+
+                            case "T":
+                                motion1.SpeedSet(ucMotion.axis.T, 0, stRecipe[nSeq_Step].velocity);
+                                motion1.Move_ABS(ucMotion.axis.T, stRecipe[nSeq_Step].location);
+                                nSeq_Step++;
+                                break;
+
+                            case "Z1":
+                                motion1.SpeedSet(ucMotion.axis.Z1, 0, stRecipe[nSeq_Step].velocity);
+                                motion1.Move_ABS(ucMotion.axis.Z1, stRecipe[nSeq_Step].location);
+                                nSeq_Step++;
+                                break;
+
+                            case "Z2":
+                                motion1.SpeedSet(ucMotion.axis.Z2, 0, stRecipe[nSeq_Step].velocity);
+                                motion1.Move_ABS(ucMotion.axis.Z2, stRecipe[nSeq_Step].location);
+                                nSeq_Step++;
+                                break;
+                        }
+                        break;
+
+                    case "Inspection":
+                        switch (stRecipe[nSeq_Step].item)
+                        {
+                            case "Cam1":
+                                if (Motion_Busy() == false)
+                                {
+                                    clsVision_Cam1.oNativeModeClient.SendCommand("SE8");
+                                    nSeq_Step++;
+                                }
+                                break;
+
+                            case "Cam2":
+                                if (Motion_Busy() == false)
+                                {
+                                    clsVision_Cam2.oNativeModeClient.SendCommand("SE8");
+                                    nSeq_Step++;
+                                }
+                                break;
+                        }
+                        break;
+
+                    case "Done":
+
+                        break;
+                }
             }
             catch (Exception ex) { }
         }
@@ -1110,36 +1305,40 @@ namespace HFR_Inspection
             {
                 if (cvsInSightDisplay1.Connected == true)
                 {
-                    switch (cvsInSightDisplay1.Results.StatusLevel)
+                    //if (bSequence == true
+                    if (bSequence == false)
                     {
-                        case Cognex.InSight.CvsStatusLevel.Pass:
-                            Appand_Count(nCount_OK_Cam1, txtOKCount1);
-                            break;
+                        switch (cvsInSightDisplay1.Results.StatusLevel)
+                        {
+                            case Cognex.InSight.CvsStatusLevel.Pass:
+                                Appand_Count(nCount_OK_Cam1, txtOKCount1);
+                                break;
 
-                        case Cognex.InSight.CvsStatusLevel.Fail:
-                            Appand_Count(nCount_NG_Cam1, txtNGCount1);
-                            break;
-                    }
+                            case Cognex.InSight.CvsStatusLevel.Fail:
+                                Appand_Count(nCount_NG_Cam1, txtNGCount1);
+                                break;
+                        }
 
-                    switch (cbSaveType1.SelectedItem.ToString())
-                    {
-                        case "OK":
-                            if (cvsInSightDisplay1.Results.StatusLevel == Cognex.InSight.CvsStatusLevel.Pass)
-                            {
-                                SaveImage(clsVision_Cam1, cvsInSightDisplay1, chkImageSave1, chkGrpSave1, lblSavePath1.Text, OK_NG.OK);
-                            }
-                            break;
+                        switch (cbSaveType1.SelectedItem.ToString())
+                        {
+                            case "OK":
+                                if (cvsInSightDisplay1.Results.StatusLevel == Cognex.InSight.CvsStatusLevel.Pass)
+                                {
+                                    SaveImage(clsVision_Cam1, cvsInSightDisplay1, chkImageSave1, chkGrpSave1, lblSavePath1.Text, OK_NG.OK);
+                                }
+                                break;
 
-                        case "NG":
-                            if (cvsInSightDisplay1.Results.StatusLevel == Cognex.InSight.CvsStatusLevel.Fail)
-                            {
-                                SaveImage(clsVision_Cam1, cvsInSightDisplay1, chkImageSave1, chkGrpSave1, lblSavePath1.Text, OK_NG.NG);
-                            }
-                            break;
+                            case "NG":
+                                if (cvsInSightDisplay1.Results.StatusLevel == Cognex.InSight.CvsStatusLevel.Fail)
+                                {
+                                    SaveImage(clsVision_Cam1, cvsInSightDisplay1, chkImageSave1, chkGrpSave1, lblSavePath1.Text, OK_NG.NG);
+                                }
+                                break;
 
-                        case "ALL":
-                            SaveImage(clsVision_Cam1, cvsInSightDisplay1, chkImageSave1, chkGrpSave1, lblSavePath1.Text);
-                            break;
+                            case "ALL":
+                                SaveImage(clsVision_Cam1, cvsInSightDisplay1, chkImageSave1, chkGrpSave1, lblSavePath1.Text);
+                                break;
+                        }
                     }
                 }
             }
@@ -1152,37 +1351,40 @@ namespace HFR_Inspection
             {
                 if (cvsInSightDisplay2.Connected == true)
                 {
-                    switch (cvsInSightDisplay2.Results.StatusLevel)
+                    if (bSequence == true)
                     {
-                        case Cognex.InSight.CvsStatusLevel.Pass:
-                            Appand_Count(nCount_OK_Cam2, txtOKCount2);
-                            break;
-
-                        case Cognex.InSight.CvsStatusLevel.Fail:
-                            Appand_Count(nCount_NG_Cam2, txtNGCount2);
-                            break;
-                    }
-                    switch (cbSaveType2.SelectedItem.ToString())
-                    {
-                        case "OK":
-                            if (cvsInSightDisplay2.Results.StatusLevel == Cognex.InSight.CvsStatusLevel.Pass)
-                            {
-                                SaveImage(clsVision_Cam2, cvsInSightDisplay2, chkImageSave2, chkGrpSave2, lblSavePath2.Text, OK_NG.OK);
+                        switch (cvsInSightDisplay2.Results.StatusLevel)
+                        {
+                            case Cognex.InSight.CvsStatusLevel.Pass:
                                 Appand_Count(nCount_OK_Cam2, txtOKCount2);
-                            }
-                            break;
+                                break;
 
-                        case "NG":
-                            if (cvsInSightDisplay2.Results.StatusLevel == Cognex.InSight.CvsStatusLevel.Fail)
-                            {
-                                SaveImage(clsVision_Cam2, cvsInSightDisplay2, chkImageSave2, chkGrpSave2, lblSavePath2.Text, OK_NG.NG);
+                            case Cognex.InSight.CvsStatusLevel.Fail:
                                 Appand_Count(nCount_NG_Cam2, txtNGCount2);
-                            }
-                            break;
+                                break;
+                        }
+                        switch (cbSaveType2.SelectedItem.ToString())
+                        {
+                            case "OK":
+                                if (cvsInSightDisplay2.Results.StatusLevel == Cognex.InSight.CvsStatusLevel.Pass)
+                                {
+                                    SaveImage(clsVision_Cam2, cvsInSightDisplay2, chkImageSave2, chkGrpSave2, lblSavePath2.Text, OK_NG.OK);
+                                    //Appand_Count(nCount_OK_Cam2, txtOKCount2);
+                                }
+                                break;
 
-                        case "ALL":
-                            SaveImage(clsVision_Cam2, cvsInSightDisplay2, chkImageSave2, chkGrpSave2, lblSavePath2.Text);
-                            break;
+                            case "NG":
+                                if (cvsInSightDisplay2.Results.StatusLevel == Cognex.InSight.CvsStatusLevel.Fail)
+                                {
+                                    SaveImage(clsVision_Cam2, cvsInSightDisplay2, chkImageSave2, chkGrpSave2, lblSavePath2.Text, OK_NG.NG);
+                                    //Appand_Count(nCount_NG_Cam2, txtNGCount2);
+                                }
+                                break;
+
+                            case "ALL":
+                                SaveImage(clsVision_Cam2, cvsInSightDisplay2, chkImageSave2, chkGrpSave2, lblSavePath2.Text);
+                                break;
+                        }
                     }
                 }
             }
@@ -1235,7 +1437,7 @@ namespace HFR_Inspection
                     btnLive1.Enabled = false;
                 }
 
-                cvsFilmstrip1.FilmQueue = clsVision_Cam1.oFilmstrip;
+                //cvsFilmstrip1.FilmQueue = clsVision_Cam1.oFilmstrip;
             }
             catch (Exception ex) { }
         }
@@ -1439,10 +1641,20 @@ namespace HFR_Inspection
             try
             {
                 UpdateLog_Ins("테스트테스트");
-                if (bInit_Cam1 == true && bInit_Cam2 == true && bInit_Motion == true)
+                //if (bInit_Cam1 == true && bInit_Cam2 == true && bInit_Motion == true)
+                if (bInit_Cam1 == false && bInit_Cam2 == false && bInit_Motion == false)
                 {
+                    if (strRecipe_Path == "-")
+                    {
+                        MessageBox.Show("레시피가 없습니다.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                     regKey.SetValue("Inspection_Action", "none");
-                    strSeq_Action = "none";
+                    //strSeq_Action = stRecipe[0].action;
+                    nSeq_Step = 0;
+
+                    bSequence = true;
 
                     tmSeq.Start();
                 }
@@ -1483,7 +1695,8 @@ namespace HFR_Inspection
         {
             try
             {
-                cvsInSightDisplay1.InSight.ManualAcquire();
+                //cvsInSightDisplay1.InSight.ManualAcquire();
+                string temp = clsVision_Cam1.oNativeModeClient.SendCommand("SE8");
             }
             catch (Exception ex) { }
         }
@@ -1501,7 +1714,8 @@ namespace HFR_Inspection
         {
             try
             {
-                //clsVision_Cam1.oFilmstripPlayback.Recorder = cvsInSightDisplay1.Recorder;
+                Insight1 = cvsInSightDisplay1.InSight;
+                clsVision_Cam1.oFilmstripPlayback.Recorder = cvsInSightDisplay1.Recorder;
             }
             catch (Exception ex) { }
         }
@@ -1519,7 +1733,7 @@ namespace HFR_Inspection
         {
             try
             {
-                clsVision_Cam1.oFilmstrip.SelectFirst.Execute();
+                //clsVision_Cam1.oFilmstrip.SelectFirst.Execute();
             }
             catch (Exception ex) { }
         }
@@ -1528,7 +1742,7 @@ namespace HFR_Inspection
         {
             try
             {
-                clsVision_Cam1.oFilmstrip.SelectPrevPage.Execute();
+                //clsVision_Cam1.oFilmstrip.SelectPrevPage.Execute();
             }
             catch (Exception ex) { }
         }
@@ -1537,7 +1751,7 @@ namespace HFR_Inspection
         {
             try
             {
-                clsVision_Cam1.oFilmstrip.SelectNextPage.Execute();
+                //clsVision_Cam1.oFilmstrip.SelectNextPage.Execute();
             }
             catch (Exception ex) { }
         }
@@ -1546,7 +1760,7 @@ namespace HFR_Inspection
         {
             try
             {
-                clsVision_Cam1.oFilmstrip.SelectLast.Execute();
+                //clsVision_Cam1.oFilmstrip.SelectLast.Execute();
             }
             catch (Exception ex) { }
         }
@@ -1821,6 +2035,30 @@ namespace HFR_Inspection
                 }
             }
             catch (Exception ex) { }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked == true)
+            {
+                cvsFilmstrip1.FilmQueue = clsVision_Cam1.oFilmstrip;
+            }
+            else
+                cvsFilmstrip1.FilmQueue = null;
+
+            UpdateFilmstripActions(true);
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked == true)
+            {
+                cvsFilmstrip1.FilmQueue = clsVision_Cam1.oFilmstripPlayback;
+            }
+            else
+                cvsFilmstrip1.FilmQueue = null;
+
+            UpdateFilmstripActions(false);
         }
 
         private void cbSaveType2_SelectedIndexChanged(object sender, EventArgs e)
