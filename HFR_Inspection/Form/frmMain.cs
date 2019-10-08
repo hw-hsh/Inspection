@@ -257,20 +257,20 @@ namespace HFR_Inspection
 
             if (resultsQueueMode)
             {
-                checkBox4.Visible = true;
-                button2.Visible = true;
-                button1.Visible = true;
+                //checkBox4.Visible = true;
+                //button2.Visible = true;
+                //button1.Visible = true;
 
-                btnFlimFrist1.Enabled = true;
-                btnFlimLast1.Enabled = true;
-                btnNext1.Enabled = true;
-                btnPre1.Enabled = true;
-                button2.Enabled = true;
-                button1.Enabled = true;
-                checkBox4.Enabled = true;
+                //btnFlimFrist1.Enabled = true;
+                //btnFlimLast1.Enabled = true;
+                //btnNext1.Enabled = true;
+                //btnPre1.Enabled = true;
+                //button2.Enabled = true;
+                //button1.Enabled = true;
+                //checkBox4.Enabled = true;
 
-                checkBox5.Visible = false;
-                checkBox6.Visible = false;
+                //checkBox5.Visible = false;
+                //checkBox6.Visible = false;
 
                 // Bind ResultsQueue Actions
                 clsVision_Cam1.oFilmstrip.SelectFirst.Bind(btnFlimFrist1);
@@ -283,19 +283,19 @@ namespace HFR_Inspection
             }
             else
             {
-                checkBox4.Visible = false;
-                button2.Visible = false;
-                button1.Visible = false;
-                checkBox5.Visible = true;
-                checkBox6.Visible = true;
+                //checkBox4.Visible = false;
+                //button2.Visible = false;
+                //button1.Visible = false;
+                //checkBox5.Visible = true;
+                //checkBox6.Visible = true;
 
-                btnFlimFrist1.Enabled = true;
-                btnFlimLast1.Enabled = true;
-                btnNext1.Enabled = true;
-                btnPre1.Enabled = true;
-                button2.Enabled = false;
-                button1.Enabled = false;
-                checkBox4.Enabled = false;
+                //btnFlimFrist1.Enabled = true;
+                //btnFlimLast1.Enabled = true;
+                //btnNext1.Enabled = true;
+                //btnPre1.Enabled = true;
+                //button2.Enabled = false;
+                //button1.Enabled = false;
+                //checkBox4.Enabled = false;
 
                 // Bind Playback Actions
                 clsVision_Cam1.oFilmstripPlayback.SelectFirst.Bind(btnFlimFrist1);
@@ -786,6 +786,7 @@ namespace HFR_Inspection
                         ucRecipe1.Visible = false;
                         ucRecipe2.Visible = false;
                         ucLog1.Visible = false;
+                        ucIO1.Visible = false;
                         break;
 
                     case Display_Menu.Recipe:
@@ -804,6 +805,7 @@ namespace HFR_Inspection
                         ucRecipe1.Visible = true;
                         ucRecipe2.Visible = true;
                         ucLog1.Visible = false;
+                        ucIO1.Visible = false;
                         break;
 
                     case Display_Menu.Vision:
@@ -822,6 +824,7 @@ namespace HFR_Inspection
                         ucRecipe1.Visible = false;
                         ucRecipe2.Visible = false;
                         ucLog1.Visible = false;
+                        ucIO1.Visible = false;
                         break;
 
                     case Display_Menu.Motion:
@@ -840,6 +843,7 @@ namespace HFR_Inspection
                         ucRecipe1.Visible = false;
                         ucRecipe2.Visible = false;
                         ucLog1.Visible = false;
+                        ucIO1.Visible = false;
                         break;
 
                     case Display_Menu.IO:
@@ -858,6 +862,7 @@ namespace HFR_Inspection
                         ucRecipe1.Visible = false;
                         ucRecipe2.Visible = false;
                         ucLog1.Visible = false;
+                        ucIO1.Visible = true;
                         break;
 
                     case Display_Menu.Log:
@@ -876,6 +881,7 @@ namespace HFR_Inspection
                         ucRecipe1.Visible = false;
                         ucRecipe2.Visible = false;
                         ucLog1.Visible = true;
+                        ucIO1.Visible = false;
                         break;
                 }
             }
@@ -1305,8 +1311,8 @@ namespace HFR_Inspection
             {
                 if (cvsInSightDisplay1.Connected == true)
                 {
-                    //if (bSequence == true
-                    if (bSequence == false)
+                    if (bSequence == true)
+                    //if (bSequence == false)
                     {
                         switch (cvsInSightDisplay1.Results.StatusLevel)
                         {
@@ -1920,12 +1926,13 @@ namespace HFR_Inspection
         {
             try
             {
-                OpenFileDialog opFile = new OpenFileDialog();
-
-                opFile.InitialDirectory = regKey.GetValue("Recipe_Path", "-").ToString();
-                opFile.DefaultExt = "hwr";
-                opFile.FileName = "*.hwr";
-                opFile.Filter = "레시피 파일 (*.hwr)|*.hwr|모든 파일 (*.*)|*.*";
+                OpenFileDialog opFile = new OpenFileDialog
+                {
+                    InitialDirectory = regKey.GetValue("Recipe_Path", "-").ToString(),
+                    DefaultExt = "hwr",
+                    FileName = "*.hwr",
+                    Filter = "레시피 파일 (*.hwr)|*.hwr|모든 파일 (*.*)|*.*"
+                };
 
                 if (opFile.ShowDialog() == DialogResult.OK)
                 {

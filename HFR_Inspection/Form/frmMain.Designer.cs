@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.pnlTitle = new System.Windows.Forms.Panel();
+            this.titleBar1 = new HFR_Inspection.UserControls.TitleBar();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -92,6 +93,13 @@
             this.label9 = new System.Windows.Forms.Label();
             this.btnCntReset2 = new System.Windows.Forms.Button();
             this.gbCam1 = new System.Windows.Forms.GroupBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.btnFlimLast1 = new System.Windows.Forms.Button();
@@ -121,6 +129,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtOKCount1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.ucRecipe1 = new HFR_Inspection.ucRecipe1();
+            this.motion1 = new HFR_Inspection.ucMotion();
+            this.ucRecipe2 = new HFR_Inspection.ucRecipe2();
             this.tmStatus = new System.Windows.Forms.Timer(this.components);
             this.tmInitialize_Cam1 = new System.Windows.Forms.Timer(this.components);
             this.lblMainStatus = new System.Windows.Forms.Label();
@@ -139,19 +150,9 @@
             this.optMain = new System.Windows.Forms.RadioButton();
             this.btnLogout = new System.Windows.Forms.Button();
             this.tmSeq = new System.Windows.Forms.Timer(this.components);
-            this.ucRecipe1 = new HFR_Inspection.ucRecipe1();
-            this.motion1 = new HFR_Inspection.ucMotion();
-            this.ucRecipe2 = new HFR_Inspection.ucRecipe2();
-            this.titleBar1 = new HFR_Inspection.UserControls.TitleBar();
+            this.ucIO1 = new HFR_Inspection.ucIO();
             this.ucLog1 = new HFR_Inspection.UserControls.ucLog();
             this.test1 = new HFR_Inspection.UserControls.TitleBar();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.pnlTitle.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -171,6 +172,15 @@
             this.pnlTitle.Name = "pnlTitle";
             this.pnlTitle.Size = new System.Drawing.Size(1920, 84);
             this.pnlTitle.TabIndex = 1;
+            // 
+            // titleBar1
+            // 
+            this.titleBar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.titleBar1.Location = new System.Drawing.Point(0, 0);
+            this.titleBar1.MainForm2 = this;
+            this.titleBar1.Name = "titleBar1";
+            this.titleBar1.Size = new System.Drawing.Size(1920, 84);
+            this.titleBar1.TabIndex = 0;
             // 
             // statusStrip1
             // 
@@ -937,6 +947,85 @@
             this.gbCam1.TabStop = false;
             this.gbCam1.Text = "Cam1";
             // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Location = new System.Drawing.Point(400, 189);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(90, 19);
+            this.checkBox6.TabIndex = 33;
+            this.checkBox6.Text = "checkBox6";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox6.Visible = false;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Location = new System.Drawing.Point(304, 189);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(90, 19);
+            this.checkBox5.TabIndex = 32;
+            this.checkBox5.Text = "checkBox5";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox5.Visible = false;
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(665, 123);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(40, 40);
+            this.button1.TabIndex = 31;
+            this.button1.Text = "<<";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            // 
+            // button2
+            // 
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Location = new System.Drawing.Point(619, 123);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(40, 40);
+            this.button2.TabIndex = 30;
+            this.button2.Text = "|<";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(527, 142);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(90, 19);
+            this.checkBox4.TabIndex = 29;
+            this.checkBox4.Text = "checkBox4";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.Visible = false;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(356, 165);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(98, 19);
+            this.radioButton2.TabIndex = 28;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "radioButton2";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(240, 165);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(98, 19);
+            this.radioButton1.TabIndex = 27;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "radioButton1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
@@ -969,6 +1058,7 @@
             this.btnFlimLast1.TabIndex = 24;
             this.btnFlimLast1.Text = ">|";
             this.btnFlimLast1.UseVisualStyleBackColor = true;
+            this.btnFlimLast1.Visible = false;
             this.btnFlimLast1.Click += new System.EventHandler(this.btnFlimLast1_Click);
             // 
             // btnNext1
@@ -980,6 +1070,7 @@
             this.btnNext1.TabIndex = 23;
             this.btnNext1.Text = ">>";
             this.btnNext1.UseVisualStyleBackColor = true;
+            this.btnNext1.Visible = false;
             this.btnNext1.Click += new System.EventHandler(this.btnNext1_Click);
             // 
             // btnPre1
@@ -991,6 +1082,7 @@
             this.btnPre1.TabIndex = 22;
             this.btnPre1.Text = "<<";
             this.btnPre1.UseVisualStyleBackColor = true;
+            this.btnPre1.Visible = false;
             this.btnPre1.Click += new System.EventHandler(this.btnPre1_Click);
             // 
             // btnFlimFrist1
@@ -1002,6 +1094,7 @@
             this.btnFlimFrist1.TabIndex = 21;
             this.btnFlimFrist1.Text = "|<";
             this.btnFlimFrist1.UseVisualStyleBackColor = true;
+            this.btnFlimFrist1.Visible = false;
             this.btnFlimFrist1.Click += new System.EventHandler(this.btnFlimFrist1_Click);
             // 
             // btnOpenSaveFolder_Cam1
@@ -1266,6 +1359,42 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "OK Count : ";
             // 
+            // ucRecipe1
+            // 
+            this.ucRecipe1.AutoSize = true;
+            this.ucRecipe1.BackColor = System.Drawing.Color.White;
+            this.ucRecipe1.Location = new System.Drawing.Point(6, 577);
+            this.ucRecipe1.MainForm2 = this;
+            this.ucRecipe1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.ucRecipe1.Motion2 = this.motion1;
+            this.ucRecipe1.Name = "ucRecipe1";
+            this.ucRecipe1.Size = new System.Drawing.Size(1426, 297);
+            this.ucRecipe1.TabIndex = 27;
+            this.ucRecipe1.Visible = false;
+            // 
+            // motion1
+            // 
+            this.motion1.BackColor = System.Drawing.Color.White;
+            this.motion1.Location = new System.Drawing.Point(3, 151);
+            this.motion1.MainForm2 = this;
+            this.motion1.Name = "motion1";
+            this.motion1.Size = new System.Drawing.Size(1911, 881);
+            this.motion1.TabIndex = 20;
+            this.motion1.Visible = false;
+            // 
+            // ucRecipe2
+            // 
+            this.ucRecipe2.BackColor = System.Drawing.Color.White;
+            this.ucRecipe2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.ucRecipe2.Location = new System.Drawing.Point(1438, 9);
+            this.ucRecipe2.MainForm2 = this;
+            this.ucRecipe2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ucRecipe2.Name = "ucRecipe2";
+            this.ucRecipe2.Recipe2 = this.ucRecipe1;
+            this.ucRecipe2.Size = new System.Drawing.Size(467, 867);
+            this.ucRecipe2.TabIndex = 18;
+            this.ucRecipe2.Visible = false;
+            // 
             // tmStatus
             // 
             this.tmStatus.Tick += new System.EventHandler(this.tmStatus_Tick);
@@ -1314,7 +1443,7 @@
             this.btnChange_Pass.BackgroundImage = global::HFR_Inspection.Properties.Resources.Key;
             this.btnChange_Pass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnChange_Pass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnChange_Pass.Location = new System.Drawing.Point(1148, 89);
+            this.btnChange_Pass.Location = new System.Drawing.Point(1139, 89);
             this.btnChange_Pass.Name = "btnChange_Pass";
             this.btnChange_Pass.Size = new System.Drawing.Size(54, 55);
             this.btnChange_Pass.TabIndex = 23;
@@ -1330,7 +1459,7 @@
             this.optRecipe.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.optRecipe.ImageIndex = 7;
             this.optRecipe.ImageList = this.imageList1;
-            this.optRecipe.Location = new System.Drawing.Point(147, 89);
+            this.optRecipe.Location = new System.Drawing.Point(145, 89);
             this.optRecipe.Name = "optRecipe";
             this.optRecipe.Size = new System.Drawing.Size(136, 55);
             this.optRecipe.TabIndex = 19;
@@ -1347,7 +1476,7 @@
             this.optLog.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.optLog.ImageIndex = 6;
             this.optLog.ImageList = this.imageList1;
-            this.optLog.Location = new System.Drawing.Point(719, 89);
+            this.optLog.Location = new System.Drawing.Point(713, 89);
             this.optLog.Name = "optLog";
             this.optLog.Size = new System.Drawing.Size(136, 55);
             this.optLog.TabIndex = 18;
@@ -1363,7 +1492,7 @@
             this.btnMainSetting.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMainSetting.ImageIndex = 1;
             this.btnMainSetting.ImageList = this.imageList1;
-            this.btnMainSetting.Location = new System.Drawing.Point(862, 89);
+            this.btnMainSetting.Location = new System.Drawing.Point(855, 89);
             this.btnMainSetting.Name = "btnMainSetting";
             this.btnMainSetting.Size = new System.Drawing.Size(136, 55);
             this.btnMainSetting.TabIndex = 17;
@@ -1379,7 +1508,7 @@
             this.btnInit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInit.ImageIndex = 4;
             this.btnInit.ImageList = this.imageList1;
-            this.btnInit.Location = new System.Drawing.Point(1004, 89);
+            this.btnInit.Location = new System.Drawing.Point(997, 89);
             this.btnInit.Name = "btnInit";
             this.btnInit.Size = new System.Drawing.Size(136, 55);
             this.btnInit.TabIndex = 15;
@@ -1396,7 +1525,7 @@
             this.optIO.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.optIO.ImageIndex = 3;
             this.optIO.ImageList = this.imageList1;
-            this.optIO.Location = new System.Drawing.Point(576, 89);
+            this.optIO.Location = new System.Drawing.Point(571, 89);
             this.optIO.Name = "optIO";
             this.optIO.Size = new System.Drawing.Size(136, 55);
             this.optIO.TabIndex = 9;
@@ -1413,7 +1542,7 @@
             this.optMotion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.optMotion.ImageIndex = 5;
             this.optMotion.ImageList = this.imageList1;
-            this.optMotion.Location = new System.Drawing.Point(433, 89);
+            this.optMotion.Location = new System.Drawing.Point(429, 89);
             this.optMotion.Name = "optMotion";
             this.optMotion.Size = new System.Drawing.Size(136, 55);
             this.optMotion.TabIndex = 8;
@@ -1430,7 +1559,7 @@
             this.optVision.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.optVision.ImageIndex = 0;
             this.optVision.ImageList = this.imageList1;
-            this.optVision.Location = new System.Drawing.Point(290, 89);
+            this.optVision.Location = new System.Drawing.Point(287, 89);
             this.optVision.Name = "optVision";
             this.optVision.Size = new System.Drawing.Size(136, 55);
             this.optVision.TabIndex = 7;
@@ -1461,7 +1590,7 @@
             this.btnLogout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold);
-            this.btnLogout.Location = new System.Drawing.Point(1207, 89);
+            this.btnLogout.Location = new System.Drawing.Point(1199, 89);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(86, 55);
             this.btnLogout.TabIndex = 24;
@@ -1474,50 +1603,16 @@
             // 
             this.tmSeq.Tick += new System.EventHandler(this.tmSeq_Tick);
             // 
-            // ucRecipe1
+            // ucIO1
             // 
-            this.ucRecipe1.AutoSize = true;
-            this.ucRecipe1.BackColor = System.Drawing.Color.White;
-            this.ucRecipe1.Location = new System.Drawing.Point(6, 577);
-            this.ucRecipe1.MainForm2 = this;
-            this.ucRecipe1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.ucRecipe1.Motion2 = this.motion1;
-            this.ucRecipe1.Name = "ucRecipe1";
-            this.ucRecipe1.Size = new System.Drawing.Size(1426, 297);
-            this.ucRecipe1.TabIndex = 27;
-            this.ucRecipe1.Visible = false;
-            // 
-            // motion1
-            // 
-            this.motion1.BackColor = System.Drawing.Color.White;
-            this.motion1.Location = new System.Drawing.Point(3, 151);
-            this.motion1.MainForm2 = this;
-            this.motion1.Name = "motion1";
-            this.motion1.Size = new System.Drawing.Size(1911, 881);
-            this.motion1.TabIndex = 20;
-            this.motion1.Visible = false;
-            // 
-            // ucRecipe2
-            // 
-            this.ucRecipe2.BackColor = System.Drawing.Color.White;
-            this.ucRecipe2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.ucRecipe2.Location = new System.Drawing.Point(1438, 9);
-            this.ucRecipe2.MainForm2 = this;
-            this.ucRecipe2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ucRecipe2.Name = "ucRecipe2";
-            this.ucRecipe2.Recipe2 = this.ucRecipe1;
-            this.ucRecipe2.Size = new System.Drawing.Size(467, 867);
-            this.ucRecipe2.TabIndex = 18;
-            this.ucRecipe2.Visible = false;
-            // 
-            // titleBar1
-            // 
-            this.titleBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.titleBar1.Location = new System.Drawing.Point(0, 0);
-            this.titleBar1.MainForm2 = this;
-            this.titleBar1.Name = "titleBar1";
-            this.titleBar1.Size = new System.Drawing.Size(1920, 84);
-            this.titleBar1.TabIndex = 0;
+            this.ucIO1.BackColor = System.Drawing.Color.White;
+            this.ucIO1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.ucIO1.Location = new System.Drawing.Point(3, 150);
+            this.ucIO1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ucIO1.Name = "ucIO1";
+            this.ucIO1.Size = new System.Drawing.Size(1911, 1102);
+            this.ucIO1.TabIndex = 25;
+            this.ucIO1.Visible = false;
             // 
             // ucLog1
             // 
@@ -1537,80 +1632,6 @@
             this.test1.Name = "test1";
             this.test1.Size = new System.Drawing.Size(1920, 84);
             this.test1.TabIndex = 7;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(240, 165);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(98, 19);
-            this.radioButton1.TabIndex = 27;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(356, 165);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(98, 19);
-            this.radioButton2.TabIndex = 28;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton2";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(527, 142);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(90, 19);
-            this.checkBox4.TabIndex = 29;
-            this.checkBox4.Text = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(663, 123);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(40, 40);
-            this.button1.TabIndex = 31;
-            this.button1.Text = "<<";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(617, 123);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(40, 40);
-            this.button2.TabIndex = 30;
-            this.button2.Text = "|<";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(304, 189);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(90, 19);
-            this.checkBox5.TabIndex = 32;
-            this.checkBox5.Text = "checkBox5";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(400, 189);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(90, 19);
-            this.checkBox6.TabIndex = 33;
-            this.checkBox6.Text = "checkBox6";
-            this.checkBox6.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -1635,6 +1656,7 @@
             this.Controls.Add(this.pnlTitle);
             this.Controls.Add(this.motion1);
             this.Controls.Add(this.ucLog1);
+            this.Controls.Add(this.ucIO1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1784,6 +1806,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.CheckBox checkBox5;
+        private ucIO ucIO1;
     }
 }
 

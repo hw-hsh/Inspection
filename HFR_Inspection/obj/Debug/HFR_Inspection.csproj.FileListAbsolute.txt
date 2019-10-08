@@ -82,3 +82,5 @@ D:\source\git\HFR_Inspection\obj\Debug\HFR_Inspection.ucMotion.resources
 D:\source\git\HFR_Inspection\obj\Debug\HFR_Inspection.ucRecipe2.resources
 D:\source\git\HFR_Inspection\obj\Debug\HFR_Inspection.UserControls.TitleBar.resources
 D:\source\git\HFR_Inspection\obj\Debug\HFR_Inspection.csproj.GenerateResource.Cache
+D:\4.Source\0.VS_Project\0.HW_PJT\GIT_HFR_Inspection\HFR_Inspection\obj\Debug\HFR_Inspection.ucIO.resources
+D:\4.Source\0.VS_Project\0.HW_PJT\GIT_HFR_Inspection\HFR_Inspection\obj\Debug\HFR_Inspection.Vision.resources

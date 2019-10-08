@@ -209,12 +209,13 @@ namespace HFR_Inspection
         {
             try
             {
-                SaveFileDialog svFile = new SaveFileDialog();
-
-                svFile.InitialDirectory = strFilePath;
-                svFile.DefaultExt = "hwr";
-                svFile.FileName = "*.hwr";
-                svFile.Filter = "레시피 파일 (*.hwr)|*.hwr|모든 파일 (*.*)|*.*";
+                SaveFileDialog svFile = new SaveFileDialog
+                {
+                    InitialDirectory = strFilePath,
+                    DefaultExt = "hwr",
+                    FileName = "*.hwr",
+                    Filter = "레시피 파일 (*.hwr)|*.hwr|모든 파일 (*.*)|*.*"
+                };
 
                 if (svFile.ShowDialog() == DialogResult.OK)
                 {
@@ -241,12 +242,13 @@ namespace HFR_Inspection
         {
             try
             {
-                OpenFileDialog opFile = new OpenFileDialog();
-
-                opFile.InitialDirectory = strFilePath;
-                opFile.DefaultExt = "hwr";
-                opFile.FileName = "*.hwr";
-                opFile.Filter = "레시피 파일 (*.hwr)|*.hwr|모든 파일 (*.*)|*.*";
+                OpenFileDialog opFile = new OpenFileDialog
+                {
+                    InitialDirectory = strFilePath,
+                    DefaultExt = "hwr",
+                    FileName = "*.hwr",
+                    Filter = "레시피 파일 (*.hwr)|*.hwr|모든 파일 (*.*)|*.*"
+                };
 
                 if (opFile.ShowDialog() == DialogResult.OK)
                 {
